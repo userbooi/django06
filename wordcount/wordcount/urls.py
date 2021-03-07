@@ -23,3 +23,4 @@ urlpatterns = [
     path('wordcount', views.count, name='count'),
     path('help_page', views.help, name='help'),
 ]
+

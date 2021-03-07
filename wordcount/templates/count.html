@@ -6,13 +6,22 @@
 </head>
 <body>
 
-<a href="{% url 'home' %}">restart count</a>
-<br>
-<p></p>
+<h1>Word Count: {{ len }} words</h1>
+
 <a href="{% url 'help' %}">help page</a>
 
-<h1>Word Count: {{ len }} words</h1>
-<h2>your words: {{ word }}</h2>
+<h2>your word(s): {{ word }}</h2>
+
+<form action="{% url 'count' %}">
+    <textarea cols="100" rows="10" name="fulltext"></textarea>
+    <br>
+    <input type="submit" value="count!"/>
+</form>
+
+{% for word, lol in worddict %}
+    <h2>{{ word }} - {{ lol }}</h2>
+    <br>
+{% endfor %}
 
 </body>
 </html>

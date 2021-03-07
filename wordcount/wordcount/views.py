@@ -1,12 +1,23 @@
 from django.shortcuts import render
+import operator, re
 
 def home(request):
     return render(request, 'word.html', {'counttext':'100'})
 
 def count(request):
     words = request.GET['fulltext']
-    wordslist = words.split(' ')
-    return render(request, 'count.html', {'word':words, 'len':len(wordslist)})
+    words = re.sub(r"(\w*)\W*(\w*)", r"\1 \2", words)
+    wordslist = words.split(" ")
+    worddict = {}
+    for word in wordslist:
+        if word in worddict:
+            worddict[word] += 1
+        else:
+            worddict[word] = 1
+
+    sortword = sorted(worddict.items(), key=operator.itemgetter(1), reverse=True)
+
+    return render(request, 'count.html', {'word':words, 'len':len(wordslist), 'worddict':sortword})
 
 def help(request):
     help_text = 'this is the help page'
